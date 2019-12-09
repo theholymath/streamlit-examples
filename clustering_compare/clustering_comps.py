@@ -10,15 +10,14 @@ sns.set_color_codes()
 plot_kwds = {'alpha' : 0.25, 's' : 80, 'linewidths':0}
 
 import requests
-import shutil
+import os
 
-try:
-    data = np.load('clusterable_data.npy',allow_pickle=True)
-except FileNotFoundError:
-    response = requests.get('https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy', stream=True)
-    with open('clusterable_data.npy', 'wb') as fin:
-        shutil.copyfileobj(response.raw, fin)
-        data = np.load('clusterable_data.npy')  # Works!
+DATA_URL = ('https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy')
+
+if not os.path.exists('clusterable_data.npy'):
+    data = requests.get(DATA_URL)
+else:
+    data = np.load('clusterable_data.npy')
 
 # https://hdbscan.readthedocs.io/en/latest/comparing_clustering_algorithms.html
 # data = np.load('clusterable_data.npy')
