@@ -5,6 +5,7 @@ import sklearn.cluster as cluster
 import hdbscan
 import time
 import streamlit as st
+import io
 sns.set_context('poster')
 sns.set_color_codes()
 plot_kwds = {'alpha' : 0.25, 's' : 80, 'linewidths':0}
@@ -12,10 +13,11 @@ plot_kwds = {'alpha' : 0.25, 's' : 80, 'linewidths':0}
 import requests
 import os
 
-DATA_URL = ('https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy')
+DATA_URL = 'https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy?raw=true'
 
 if not os.path.exists('clusterable_data.npy'):
-    data = requests.get(DATA_URL)
+    content = requests.get(DATA_URL).content
+    data = np.load(io.BytesIO(content))
 else:
     data = np.load('clusterable_data.npy')
 
