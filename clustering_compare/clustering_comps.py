@@ -13,7 +13,7 @@ plot_kwds = {'alpha' : 0.25, 's' : 80, 'linewidths':0}
 import requests
 import os
 
-DATA_URL = 'https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy'
+DATA_URL = 'https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy?raw=true'
 
 if not os.path.exists('clusterable_data.npy'):
     content = requests.get(DATA_URL).content
