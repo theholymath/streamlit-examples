@@ -105,13 +105,15 @@ st.pyplot(fig)
 
 
 kde = gkde(perm_replicates)
-x0 = np.linspace(min(perm_replicates), max(max(perm_replicates), pval), 100)
+x0 = np.linspace(min(perm_replicates), max(perm_replicates), 100)
 p_y = kde.pdf(x0)
 
+# if dists have same mean, the probability that the difference in means = 0
+# should approach 1 (full confidence) as sample size increases
 fig_p, ax_p = plt.subplots()
 ax_p.plot(x0, p_y, c='k', lw=2)
-ax_p.axvline(pval, c='r', lw=2, ls='--')
-section = np.linspace(pval, max(x0))
+ax_p.axvline(empirical_diff_means, c='r', lw=2, ls='--')
+section = np.linspace(empirical_diff_means, max(x0))
 ax_p.fill_between(section, kde.pdf(section), color='r')
 ax_p.set_title('Perumuted Samples: Density Estimate')
 st.pyplot(fig_p)
