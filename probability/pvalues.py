@@ -49,11 +49,15 @@ def diff_of_means(data_1, data_2):
 
 
 st.header("P-Values Demo")
+st.write("We are testing the hypothesis that two distributions share the same mean.")
+
 st.subheader("Define Class A")
+st.write("Parameters for a Beta distribution $\\Beta (\\alpha, \\beta, 0,1)$.")
 alpha_a = st.slider("Alpha A", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
 beta_a = st.slider("Beta A", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
 
 st.subheader("Define Class B")
+st.write("Parameters for a Beta distribution $\\Beta (\\alpha, \\beta, 0,1)$.")
 alpha_b = st.slider("Alpha B", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
 beta_b = st.slider("Beta B", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
 
@@ -75,6 +79,7 @@ sample_b = dist_b.rvs(num_b)
 # Compute difference of mean from experiment: empirical_diff_means
 empirical_diff_means = diff_of_means(sample_a, sample_b)
 
+st.sidebar.subheader("Bootstrapping")
 perm_reps = st.sidebar.number_input("Permutation Samples", min_value=10, value=100)
 
 run = st.button("Run")
