@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 # import pandas as pd
 import streamlit as st
-
+from matplotlib.backends.backend_agg import RendererAgg
+_lock = RendererAgg.lock
 
 def permutation_sample(data1, data2):
     """Generate a permutation sample from two data sets."""
@@ -64,7 +65,7 @@ beta_b = st.slider("Beta B", min_value=0.01, max_value=10.0, step=0.01, value=1.
 dist_a = dist.beta(alpha_a, beta_a)
 dist_b = dist.beta(alpha_b, beta_b)
 
-fig, ax = plt.subplots()
+
 x = np.linspace(0.01, 0.99, 100)
 pdf_a = dist_a.pdf(x)
 pdf_b = dist_b.pdf(x)
@@ -90,17 +91,19 @@ perm_replicates = draw_perm_reps(sample_a, sample_b, diff_of_means, size=perm_re
 # Compute p-value: p
 pval = np.sum(perm_replicates >= empirical_diff_means) / len(perm_replicates)
 
-# ax.hist(perm_replicates, bins=100, density=True)
-ax.plot(x, pdf_a, label='A')
-ax.plot(x, pdf_b, label='B')
-ax.legend()
-if pval < 0.05:
-    color = 'r'
-else:
-    color = 'k'
-ax.set_title(f"p-value: {pval:1.2e}", fontsize=24, c=color)
-ax.set_ylim([0, 1.05*np.max(np.concatenate([pdf_a, pdf_b]))])
-st.pyplot(fig)
+with _lock:
+    fig, ax = plt.subplots()
+    # ax.hist(perm_replicates, bins=100, density=True)
+    ax.plot(x, pdf_a, label='A')
+    ax.plot(x, pdf_b, label='B')
+    ax.legend()
+    if pval < 0.05:
+        color = 'r'
+    else:
+        color = 'k'
+    ax.set_title(f"p-value: {pval:1.2e}", fontsize=24, c=color)
+    ax.set_ylim([0, 1.05*np.max(np.concatenate([pdf_a, pdf_b]))])
+    st.pyplot(fig)
 
 
 
@@ -110,10 +113,12 @@ p_y = kde.pdf(x0)
 
 # if dists have same mean, the probability that the difference in means = 0
 # should approach 1 (full confidence) as sample size increases
-fig_p, ax_p = plt.subplots()
-ax_p.plot(x0, p_y, c='k', lw=2)
-ax_p.axvline(empirical_diff_means, c='r', lw=2, ls='--')
-section = np.linspace(empirical_diff_means, max(x0))
-ax_p.fill_between(section, kde.pdf(section), color='r')
-ax_p.set_title('Perumuted Samples: Density Estimate')
-st.pyplot(fig_p)
+with _lock:
+    fig_p, ax_p = plt.subplots()
+    ax_p.plot(x0, p_y, c='k', lw=2)
+    ax_p.axvline(empirical_diff_means, c='r', lw=2, ls='--')
+    section = np.linspace(empirical_diff_means, max(x0))
+    ax_p.fill_between(section, kde.pdf(section), color='r')
+    ax_p.set_title('Perumuted Samples: Density Estimate')
+    st.pyplot(fig_p)
+
