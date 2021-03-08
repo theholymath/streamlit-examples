@@ -79,12 +79,13 @@ perm_reps = st.sidebar.number_input("Permutation Samples", min_value=10, value=1
 
 run = st.button("Run")
 
-# Draw 10,000 permutation replicates: perm_replicates
+# Draw a number of permutation replicates: perm_replicates
 perm_replicates = draw_perm_reps(sample_a, sample_b, diff_of_means, size=perm_reps)
 
 # Compute p-value: p
 pval = np.sum(perm_replicates >= empirical_diff_means) / len(perm_replicates)
 
+# ax.hist(perm_replicates, bins=100, density=True)
 ax.plot(x, pdf_a, label='A')
 ax.plot(x, pdf_b, label='B')
 ax.legend()
@@ -98,4 +99,14 @@ st.pyplot(fig)
 
 
 
+kde = gkde(perm_replicates)
+x0 = np.linspace(min(perm_replicates), max(max(perm_replicates), pval), 100)
+p_y = kde.pdf(x0)
 
+fig_p, ax_p = plt.subplots()
+ax_p.plot(x0, p_y, c='k', lw=2)
+ax_p.axvline(pval, c='r', lw=2, ls='--')
+section = np.linspace(pval, max(x0))
+ax_p.fill_between(section, kde.pdf(section), color='r')
+ax_p.set_title('Perumuted Samples: Density Estimate')
+st.pyplot(fig_p)
