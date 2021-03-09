@@ -1,6 +1,5 @@
 from scipy.stats import gaussian_kde as gkde
 import scipy.stats.distributions as dist
-from scipy.stats import kstest
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -74,7 +73,7 @@ dist_a = dist.beta(alpha_a, beta_a)
 dist_b = dist.beta(alpha_b, beta_b)
 
 
-x = np.linspace(0.01, 0.99, 100)
+x = np.linspace(0.01, 0.99, 500)
 pdf_a = dist_a.pdf(x)
 pdf_b = dist_b.pdf(x)
 
@@ -135,5 +134,11 @@ with _lock:
     st.pyplot(fig_p)
 
 
+from scipy.stats import kstest
+st.sidebar.write("**The _Kolmogorov-Smirnov_ test identifies differences in distributions.**")
+st.sidebar.write("> Small values imply differing distributions")
+
 p_val_ks = kstest(sample_a, sample_b)[1]
 st.sidebar.write(f"KS Test p-value: {p_val_ks:1.2e}")
+
+st.sidebar.write("Unlike the (one-sided) hypothesis test we posed, it detects more than just differences in means, accounting for variation as well.")
