@@ -61,13 +61,13 @@ st.write("When $p < 0.05$, we reject the null hypothesis at a significance level
 
 st.subheader("Define Class A")
 st.write("Parameters for a Beta distribution $A\\sim \\Beta (\\alpha, \\beta, 0,1)$.")
-alpha_a = st.slider("Alpha A", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
-beta_a = st.slider("Beta A", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
+alpha_a = st.slider("Alpha A", min_value=0.01, max_value=10.0, step=0.01, value=3.0)
+beta_a = st.slider("Beta A", min_value=0.01, max_value=10.0, step=0.01, value=3.0)
 
 st.subheader("Define Class B")
 st.write("Parameters for a Beta distribution $B\\sim \\Beta (\\alpha, \\beta, 0,1)$.")
-alpha_b = st.slider("Alpha B", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
-beta_b = st.slider("Beta B", min_value=0.01, max_value=10.0, step=0.01, value=1.0)
+alpha_b = st.slider("Alpha B", min_value=0.01, max_value=10.0, step=0.01, value=5.0)
+beta_b = st.slider("Beta B", min_value=0.01, max_value=10.0, step=0.01, value=5.0)
 
 dist_a = dist.beta(alpha_a, beta_a)
 dist_b = dist.beta(alpha_b, beta_b)
