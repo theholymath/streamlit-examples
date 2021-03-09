@@ -51,10 +51,10 @@ def diff_of_means(data_1, data_2):
 
 st.header("P-Values Demo")
 st.write("We are testing that the mean of class A is greater than the mean of class B.")
-st.write("Our statistic is  $\\mu(A) - \\mu(B)$.")
+st.write("Our statistic is represented by the function $f$.")
 st.subheader("Hypotheses")
-st.write("$H_0$: $\\mu(A) - \\mu(B) = 0$")
-st.write("$H_A$: $\\mu(A) - \\mu(B) > 0$")
+st.write("$H_0$: f(A, B) = $\\mu(A) - \\mu(B) = 0$")
+st.write("$H_A$: f(A, B) = $\\mu(A) - \\mu(B) > 0$")
 
 st.write(">_Recall that we can never accept the null hypothesis, only fail to reject it._")
 st.write("When $p < 0.05$, we reject the null hypothesis at a significance level of 5% (false positives). We accept the alternative hypothesis $H_A$.")
