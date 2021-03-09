@@ -50,11 +50,14 @@ def diff_of_means(data_1, data_2):
 
 
 st.header("P-Values Demo")
-st.write("We are testing the null hypothesis that two distributions share the same mean.")
+st.write("We are testing that the mean of class A is greater than the mean of class B.")
+st.write("Our statistic is  $\\mu(A) - \\mu(B)$.")
+st.subheader("Hypotheses")
 st.write("$H_0$: $\\mu(A) - \\mu(B) = 0$")
 st.write("$H_A$: $\\mu(A) - \\mu(B) > 0$")
 
 st.write(">_Recall that we can never accept the null hypothesis, only fail to reject it._")
+st.write("When $p < 0.05$, we reject the null hypothesis at a significance level of 5% (false positives). We accept the alternative hypothesis $H_A$.")
 
 st.subheader("Define Class A")
 st.write("Parameters for a Beta distribution $A\\sim \\Beta (\\alpha, \\beta, 0,1)$.")
@@ -98,13 +101,17 @@ pval = np.sum(perm_replicates >= empirical_diff_means) / len(perm_replicates)
 with _lock:
     fig, ax = plt.subplots()
     # ax.hist(perm_replicates, bins=100, density=True)
-    ax.plot(x, pdf_a, label='A')
-    ax.plot(x, pdf_b, label='B')
+    mA = dist_a.mean()
+    mB = dist_b.mean()
+    ax.axvline(mA, c='b')
+    ax.axvline(mB, c='xkcd:orange')
+    ax.plot(x, pdf_a, label=f'A ({mA:1.2e})', c='b')
+    ax.plot(x, pdf_b, label=f'B ({mB:1.2e})', c='xkcd:orange')
     ax.legend()
     if pval < 0.05:
-        color = 'r'
-    else:
         color = 'k'
+    else:
+        color = 'r'
     ax.set_title(f"p-value: {pval:1.2e}", fontsize=24, c=color)
     ax.set_ylim([0, 1.05*np.max(np.concatenate([pdf_a, pdf_b]))])
     st.pyplot(fig)
