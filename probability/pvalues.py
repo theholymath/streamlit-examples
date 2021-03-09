@@ -1,5 +1,6 @@
 from scipy.stats import gaussian_kde as gkde
 import scipy.stats.distributions as dist
+from scipy.stats import kstest
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -133,3 +134,6 @@ with _lock:
     ax_p.set_title('Perumuted Samples: Density Estimate')
     st.pyplot(fig_p)
 
+
+p_val_ks = kstest(sample_a, sample_b)[1]
+st.sidebar.write(f"KS Test p-value: {p_val_ks:1.2e}")
