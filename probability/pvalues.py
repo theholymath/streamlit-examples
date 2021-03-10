@@ -130,7 +130,7 @@ with _lock:
     ax_p.axvline(empirical_diff_means, c='r', lw=2, ls='--')
     section = np.linspace(empirical_diff_means, max(x0), 100)
     ax_p.fill_between(section, kde.pdf(section), color='r')
-    ax_p.set_title('Perumuted Samples: Density Estimate')
+    ax_p.set_title('Permuted Samples of Test Statistic: Density Estimate')
     st.pyplot(fig_p)
 
 
