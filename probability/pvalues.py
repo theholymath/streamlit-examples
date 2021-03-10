@@ -78,8 +78,8 @@ pdf_a = dist_a.pdf(x)
 pdf_b = dist_b.pdf(x)
 
 
-num_a = st.sidebar.number_input("Num A", min_value=1, max_value=10000, value=100)
-num_b = st.sidebar.number_input("Num B", min_value=1, max_value=10000, value=100)
+num_a = st.sidebar.number_input("Number of Samples from A", min_value=1, max_value=10000, value=100)
+num_b = st.sidebar.number_input("Number of Samples from B", min_value=1, max_value=10000, value=100)
 
 sample_a = dist_a.rvs(num_a)
 sample_b = dist_b.rvs(num_b)
