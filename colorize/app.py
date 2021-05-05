@@ -76,6 +76,7 @@ if __name__ == '__main__':
         uploaded_file = st.file_uploader("Choose a file", type=["png", "jpg", "jpeg"])
         if uploaded_file is not None:
             bytes_data = uploaded_file
+            st.image(bytes_data)
 
     if bytes_data:
         colormap = st.selectbox(label='Select Color Map', options=all_colormaps)
