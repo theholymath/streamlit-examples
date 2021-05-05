@@ -106,11 +106,11 @@ def colorize_with_st(image: Image):
     all_colormaps = ['viridis', 'hot']  # FIXME get full list
     if method == 'mpl':
         colormap = st.selectbox(label='Select Color Map', options=all_colormaps)
-        fig = colorize_with_mpl(image, colormap)
+        fig = colorize_with_mpl(image, colormap, 'out.png')
     else:
         fig = None
-    
-    st.pyplot(fig)
+
+    st.image('out.png')
 
 
 if __name__ == '__main__':
