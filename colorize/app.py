@@ -34,6 +34,7 @@ def colorize_with_mpl(image: Image, colormap: str = 'hot') -> np.ndarray:
     # plt.savefig('test.png')
     fig, ax = plt.subplots()
     ax.imshow(data, cmap=colormap)
+    ax.set_frame_on(False)
     ax.axis('off')
     st.pyplot(fig)
     return data
