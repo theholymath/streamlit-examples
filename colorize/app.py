@@ -35,14 +35,8 @@ def load_image_from_upload():
     pass
 
 
-def colorize_with_mpl(image: Image, colormap: str = 'hot') -> np.ndarray:
+def colorize_with_mpl(image: Image, colormap: str = 'hot', filename: str = None):
     data = np.array(list(image.getdata())).reshape(image.size[::-1])
-    fig = save_image(data, colormap, 'test.png')
-    print('saved')
-    return fig
-
-
-def save_image(data, cm, filename=None):
     sizes = np.shape(data)
     height = float(sizes[0])
     width = float(sizes[1])
@@ -53,11 +47,12 @@ def save_image(data, cm, filename=None):
     ax.set_axis_off()
     fig.add_axes(ax)
  
-    ax.imshow(data, cmap=cm)
+    ax.imshow(data, cmap=colormap)
     if filename:
         fig.savefig(filename, dpi=height) 
-    plt.close()
+    # plt.close()
     return fig
+
 
 def colorize_with_nn():
     pass
@@ -77,7 +72,7 @@ def header():
 
 
 def get_image_with_st() -> Image:
-    bytes_data = None
+    image = None
     input_mode = st.selectbox(label='Image Input Mode', options=['url', 'file'])
     if input_mode == 'url':
         data_url = st.text_input("URL of Image (Right Click > Copy Image Location)",
@@ -85,21 +80,21 @@ def get_image_with_st() -> Image:
         if data_url:
             st.text("image preview:")
             st.image(data_url)
-            bytes_data = load_image_from_url(data_url)
+            image = load_image_from_url(data_url)
     else:
         uploaded_file = st.file_uploader("Choose a file", type=["png", "jpg", "jpeg"])
         if uploaded_file is not None:
             bytes_data = uploaded_file
             st.image(bytes_data)
-    
-    image = bytes_to_image(bytes_data)
+            image = bytes_to_image(bytes_data)
+
     return image
 
 
 def bytes_to_image(bytes_data: ByteString) -> Image:
     if not bytes_data:
         return None
-    image = Image.open(bytes_data, 'r')
+    image = Image.open(bytes_data)
     image = maybe_convert_to_grayscale(image)
     return image
 
@@ -135,4 +130,4 @@ if __name__ == '__main__':
         colorize_with_st(image)
     else:
         image = load_image_from_url(DATA_URL)
-        colorize_with_mpl(image, colormap='viridis')
+        colorize_with_mpl(image, colormap='viridis', filename='test.png')
