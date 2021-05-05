@@ -60,10 +60,10 @@ if __name__ == '__main__':
         DATA_URL = 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-gold-select-201810?wid=1078&hei=624&fmt=jpeg&qlt=80&.v=1603332211000'
 
     ##### START OF APP #####
-    st.write('# Colorize Photos')
-    st.write('Upload or link to a black and white photo (or color...) and have it be colorized')
-    st.write('TODO: 1. add more ways of colorizing.\n 1. add more colormap options')
-    st.write('***')
+    st.markdown('# Colorize Photos')
+    st.markdown('Upload or link to a black and white photo (or color...) and have it be colorized')
+    st.markdown('TODO: 1. add more ways of colorizing.\n 1. add more colormap options')
+    st.markdown('***')
     all_colormaps = ['viridis', 'hot']  # FIXME get full list
     bytes_data = None
 
