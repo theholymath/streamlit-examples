@@ -62,7 +62,9 @@ if __name__ == '__main__':
     ##### START OF APP #####
     st.markdown('# Colorize Photos')
     st.markdown('Upload or link to a black and white photo (or color...) and have it be colorized')
-    st.markdown('TODO: 1. add more ways of colorizing.\n 1. add more colormap options')
+    st.markdown('TODO:')
+    st.markdown('- add more ways of colorizing')
+    st.markdown('- add more colormap options')
     st.markdown('***')
     all_colormaps = ['viridis', 'hot']  # FIXME get full list
     bytes_data = None
