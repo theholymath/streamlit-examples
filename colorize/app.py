@@ -117,7 +117,7 @@ if __name__ == '__main__':
     # get url from user in cmd line
     import sys
     nargs = len(sys.argv)
-    print("Testing syntax: `python app.py URL`")
+    # print("Testing syntax: `python app.py URL`")
     if nargs == 1:
         streamlit = True
     else:
