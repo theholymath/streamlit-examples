@@ -67,10 +67,11 @@ if __name__ == '__main__':
     input_mode = st.selectbox(label='url', options=['url', 'file'])
     if input_mode == 'url':
         data_url = st.text_input("URL of Image (Right Click > Copy Image Location)",
-                                 value=DATA_URL)
-        st.text("image preview:")
-        st.image(data_url)
-        bytes_data = load_image_from_url(data_url)
+                                 value='')
+        if data_url:
+            st.text("image preview:")
+            st.image(data_url)
+            bytes_data = load_image_from_url(data_url)
     else:
         uploaded_file = st.file_uploader("Choose a file", type=["png", "jpg", "jpeg"])
         if uploaded_file is not None:
