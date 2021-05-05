@@ -61,11 +61,13 @@ if __name__ == '__main__':
 
     ##### START OF APP #####
     st.write('# Colorize Photos')
+    st.write('Upload or link to a black and white photo (or color...) and have it be colorized')
+    st.write('TODO: 1. add more ways of colorizing.\n 1. add more colormap options')
     st.write('***')
     all_colormaps = ['viridis', 'hot']  # FIXME get full list
     bytes_data = None
 
-    input_mode = st.selectbox(label='url', options=['url', 'file'])
+    input_mode = st.selectbox(label='Image Input Mode', options=['url', 'file'])
     if input_mode == 'url':
         data_url = st.text_input("URL of Image (Right Click > Copy Image Location)",
                                  value='')
