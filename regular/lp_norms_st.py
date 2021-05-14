@@ -162,7 +162,7 @@ for i, w_ in enumerate(W):
 # plot loss surface
 B, W = np.meshgrid(B, W)
 ax.plot_surface(B, W, J, rstride=1, cstride=1, cmap=plt.cm.viridis, linewidth=0, antialiased=False, alpha=0.75)
-ax.contour(B, W, J, 20, zdir='z', offset=0, linestyles='solid', cmap=plt.cm.viridis, linewidth=1, antialiased=True)
+ax.contour(B, W, J, 20, zdir='z', offset=0, linestyles='solid', cmap=plt.cm.viridis, antialiased=True)
 ax.set_title("cost for different w, b")
 ax.set_xlabel("b")
 ax.set_ylabel("w")
