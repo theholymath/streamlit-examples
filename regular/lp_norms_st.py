@@ -161,11 +161,13 @@ for i, w_ in enumerate(W):
 
 # plot loss surface
 B, W = np.meshgrid(B, W)
-ax.plot_surface(B, W, J, rstride=1, cstride=1, cmap=plt.cm.coolwarm, linewidth=0, antialiased=False)
+ax.plot_surface(B, W, J, rstride=1, cstride=1, cmap=plt.cm.viridis, linewidth=0, antialiased=False, alpha=0.75)
+ax.contour(B, W, J, 10, zdir='z', offset=0, linestyles='solid', rstride=0.5, cstride=0.5, cmap=plt.cm.viridis, linewidth=1, antialiased=True)
 ax.set_title("cost for different w, b")
 ax.set_xlabel("b")
 ax.set_ylabel("w")
 ax.set_zlim([0, 50])
+st.write('---')
 elev = st.slider('elevation', min_value=0, max_value=90, value=10, step=5)
 azim = st.slider('azimuth', min_value=0, max_value=180, value=140, step=5)
 ax.view_init(elev=elev, azim=azim)
