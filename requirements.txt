@@ -4,4 +4,4 @@ numpy
 scipy
 seaborn
 Equation
-hdbscan
+# hdbscan
