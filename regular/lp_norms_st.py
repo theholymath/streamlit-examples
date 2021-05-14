@@ -38,12 +38,12 @@ st.sidebar.markdown('$Ax + By + C = 0$')
 #st.sidebar.markdown('$y = w_1 x + w_2 x + b$')
 
 form = st.sidebar.form(key='my-form')
-st.sidebar.markdown('$y = (-A/B) x - C/B$')
-st.sidebar.markdown('$(w, b) := (-A/B, -C/B)$')
 a = st.sidebar.slider("A", min_value=-2.0, max_value=1.0, value=-1.0)
 b = st.sidebar.slider("B", min_value=2.0, max_value=3.0, value=2.0)
 c = st.sidebar.slider("C", min_value=-2.0, max_value=1.0, value=-0.1)
 
+st.sidebar.markdown('$y = (-A/B) x - C/B$')
+st.sidebar.markdown('$(w, b) := (-A/B, -C/B)$')
 
 def norm(x, p):
     return np.sum(np.abs(x)**p, axis=0)**(1/p)
@@ -94,6 +94,7 @@ ax.set_xlim([-2*width,2*width])
 ax.set_ylabel('y', fontsize=24)
 ax.set_xlabel('x', fontsize=24)
 ax.scatter([0], [0], c='k', s=20)
+ax.set_title(f'y = {-a/b}x + {-c/b}, p={p}',fontsize=24)
 st.sidebar.pyplot(fig)
 
 
@@ -115,7 +116,8 @@ data = np.array([
     [5.0, 2.7]
 ])
 
-
+num_pts = st.sidebar.slider("Num Data", min_value=1, max_value=7, value=1)
+data = data[:num_pts,:]
 x, y = data[:,0], data[:,1]
 
 def f(x):
