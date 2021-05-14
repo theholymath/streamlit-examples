@@ -32,7 +32,7 @@ st.markdown('We want to minimize the difference between observations $\mathbf{y}
 st.subheader('$\mathbf{w}^*, b^* = \\text{argmin}_{\mathbf{w}, b} L(\mathbf{w}, b)$')
 st.markdown('$L(\mathbf{w}, b) := ||\mathbf{y} - \mathbf{X}\mathbf{w}||_2 + \\alpha||\mathbf{w}||_p$, $\\alpha > 0$ is a dial we can tune.')
 #st.subheader('Minimizing $||x||_p$ given $ax + by + c = 0$')
-p = st.slider('p:', 1.0, 10.0, step=0.25)
+p = st.slider('p:', min_value=1.0, max_value=10.0, value=2.0, step=0.25)
 
 st.sidebar.markdown('$Ax + By + C = 0$')
 #st.sidebar.markdown('$y = w_1 x + w_2 x + b$')
@@ -70,8 +70,8 @@ else:
     res = minimize(func_p(p), (2, 0), method='SLSQP', constraints=cons)
     width = res.fun
 
-st.sidebar.subheader("Solution")
-st.sidebar.write(f"x = {res.x[0]:1.3f}, y = {res.x[1]:1.3f}")
+#st.sidebar.subheader("Solution")
+#st.sidebar.write(f"x = {res.x[0]:1.3f}, y = {res.x[1]:1.3f}")
 
 lp_func = lp_ball_pts(res.fun, p)
 
@@ -143,7 +143,7 @@ def cost(w, x, b, y_actual, p=2, a=0):
 
 x, y = data[:,0], data[:,1]
 
-alpha = st.slider('alpha', min_value=0.0, max_value=1.0, value=0.0)
+alpha = st.slider('alpha', min_value=0.0, max_value=1.0, value=0.0, step=0.1)
 from mpl_toolkits.mplot3d import Axes3D
 
 fig = plt.figure()
@@ -168,7 +168,7 @@ ax.set_xlabel("b")
 ax.set_ylabel("w")
 ax.set_zlim([0, 50])
 st.write('---')
-elev = st.slider('elevation', min_value=0, max_value=90, value=10, step=5)
-azim = st.slider('azimuth', min_value=0, max_value=180, value=140, step=5)
+elev = st.slider('elevation', min_value=0, max_value=90, step=5, value=30)
+azim = st.slider('azimuth', min_value=0, max_value=180, step=5, value=60)
 ax.view_init(elev=elev, azim=azim)
 st.pyplot(fig)
