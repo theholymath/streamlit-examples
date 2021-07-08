@@ -24,17 +24,6 @@ def maybe_convert_to_grayscale(image: Image) -> np.ndarray:
     return ImageOps.grayscale(ImageOps.grayscale(image))
 
 
-# @st.cache
-def load_image_from_url(url: str) -> Image:
-    content = requests.get(url).content
-    bytes_data = io.BytesIO(content)
-    return bytes_to_image(bytes_data)
-
-
-def load_image_from_upload():
-    pass
-
-
 def colorize_with_mpl(image: Image, colormap: str = 'hot', filename: str = None):
     data = np.array(list(image.getdata())).reshape(image.size[::-1])
     sizes = np.shape(data)
