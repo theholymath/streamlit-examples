@@ -1,0 +1,35 @@
+Streamlit app for colorizing black and white photos
+
+Prompt
+“Given a black and white photo, colorize it”
+
+Approaches
+- simple binning (pixels in [0,1])
+- neural style network (advanced)
+
+UX
+- Website
+- upload photo from url or file
+- show them the photo they uploaded
+- let them choose the colorscheme (colormaps)
+- let them download the result (easily, with a button)
+- (maybe) have a min/max value for pixels. everything outside of them is a flat color. clipping mask
+
+Questions
+- how do we get an image from a link? (requests.get().content), bytesIO from io
+- once we have the image, how do we load it to a matrix?
+- if we get a color image, how do we handle it? grayscale it first.
+- how do we get an image from their upload filepath?
+- can we use PIL.ImageOps.colorize? (mode: PIL / PyPlot / NN )
+- how do we get a list of all the mpl colormaps to supply the user with as options
+- how do we use pyplot to save an image (no axes or borders)
+
+
+Tools
+Streamlit, Python, Matplotlib
+
+Deployment
+Website setup up.
+Docker image
+Nginx, DNS
+

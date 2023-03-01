@@ -5,6 +5,7 @@ import sklearn.cluster as cluster
 import hdbscan
 import time
 import streamlit as st
+import io
 sns.set_context('poster')
 sns.set_color_codes()
 plot_kwds = {'alpha' : 0.25, 's' : 80, 'linewidths':0}
@@ -12,10 +13,11 @@ plot_kwds = {'alpha' : 0.25, 's' : 80, 'linewidths':0}
 import requests
 import os
 
-DATA_URL = ('https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy')
+DATA_URL = 'https://github.com/theholymath/streamlit-examples/blob/master/clustering_compare/clusterable_data.npy?raw=true'
 
 if not os.path.exists('clusterable_data.npy'):
-    data = requests.get(DATA_URL)
+    content = requests.get(DATA_URL).content
+    data = np.load(io.BytesIO(content))
 else:
     data = np.load('clusterable_data.npy')
 
@@ -25,12 +27,12 @@ else:
 st.title('Comparing Clustering Algorithms')
 
 if st.checkbox('Show Raw Data'):
-    plt.scatter(data.T[0], data.T[1], c='b', **plot_kwds)
-    plt.title('Raw Data')
-    frame = plt.gca()
-    frame.axes.get_xaxis().set_visible(False)
-    frame.axes.get_yaxis().set_visible(False)
-    st.pyplot()
+    fig, ax = plt.subplots()
+    ax.scatter(data.T[0], data.T[1], c='b', **plot_kwds)
+    ax.set_title('Raw Data')
+    ax.axes.get_xaxis().set_visible(False)
+    ax.axes.get_yaxis().set_visible(False)
+    st.pyplot(fig)
 
 st.write('## Plots of Clustering Algorithm')
 st.write('***')
@@ -43,13 +45,13 @@ def plot_clusters(data, algorithm, args, kwds):
     end_time = time.time()
     palette = sns.color_palette('deep', np.unique(labels).max() + 1)
     colors = [palette[x] if x >= 0 else (0.0, 0.0, 0.0) for x in labels]
-    plt.scatter(data.T[0], data.T[1], c=colors, **plot_kwds)
-    frame = plt.gca()
-    frame.axes.get_xaxis().set_visible(False)
-    frame.axes.get_yaxis().set_visible(False)
-    plt.title('Clusters found by {}'.format(str(algorithm.__name__)), fontsize=16)
-    plt.text(-0.55, 0.68, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=12)
-    st.pyplot()
+    fig, ax = plt.subplots()
+    ax.scatter(data.T[0], data.T[1], c=colors, **plot_kwds)
+    ax.axes.get_xaxis().set_visible(False)
+    ax.axes.get_yaxis().set_visible(False)
+    ax.set_title('Clusters found by {}'.format(str(algorithm.__name__)), fontsize=16)
+    ax.text(-0.55, 0.68, 'Clustering took {:.2f} s'.format(end_time - start_time), fontsize=12)
+    st.pyplot(fig)
 
 value = st.sidebar.selectbox("Select Algorithm",["Kmeans", "Affinity Propagation",
                                                  "Mean Shift", "Spectral Clustering",
